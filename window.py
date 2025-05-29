@@ -28,7 +28,7 @@ class Window:
         line.draw(self.__canvas, fill_color)
 
 class Cell:
-    def __init__(self, window):
+    def __init__(self, window=None):
         self.has_left_wall = True
         self.has_right_wall = True
         self.has_top_wall = True
@@ -40,11 +40,13 @@ class Cell:
         self.__win = window
     
     def draw(self, x1, y1, x2, y2):
+
         self.__x1 = x1
         self.__x2 = x2
         self.__y1 = y1
         self.__y2 = y2
-
+        if self.__win == None:
+            return
         if self.has_left_wall == True:
             l = Line(Point(self.__x1, self.__y1), Point(self.__x1, self.__y2))
             self.__win.draw_line(l, "black")
@@ -59,6 +61,7 @@ class Cell:
             self.__win.draw_line(l, "black")
     
     def draw_move(self, to_cell, undo=False):
+
         half_length = abs(self.__x2 - self.__x1) // 2
         center_self_x = half_length + self.__x1
         center_self_y = half_length + self.__y1
@@ -66,7 +69,8 @@ class Cell:
         half_length2 = abs(to_cell.__x2 - to_cell.__x1) // 2
         center_to_cell_x = half_length2 + to_cell.__x1
         center_to_cell_y = half_length2 + to_cell.__y1
-
+        if self.__win == None:
+            return
         fill_color = "red"
         if undo:
             fill_color = "gray"
