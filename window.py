@@ -59,6 +59,18 @@ class Cell:
         if self.has_bottom_wall == True:
             l = Line(Point(self.__x1, self.__y2), Point(self.__x2, self.__y2))
             self.__win.draw_line(l, "black")
+        if self.has_left_wall == False:
+            l = Line(Point(self.__x1, self.__y1), Point(self.__x1, self.__y2))
+            self.__win.draw_line(l, "white")
+        if self.has_right_wall == False:
+            l = Line(Point(self.__x2, self.__y1), Point(self.__x2, self.__y2))
+            self.__win.draw_line(l, "white")
+        if self.has_top_wall == False:
+            l = Line(Point(self.__x1, self.__y1), Point(self.__x2, self.__y1))
+            self.__win.draw_line(l, "white")
+        if self.has_bottom_wall == False:
+            l = Line(Point(self.__x1, self.__y2), Point(self.__x2, self.__y2))
+            self.__win.draw_line(l, "white")
     
     def draw_move(self, to_cell, undo=False):
 
