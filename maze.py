@@ -116,6 +116,56 @@ class Maze:
             for j in range(0, self.__num_rows):
                 self.__cells[i][j].visited = False
 
+    def solve(self):
+        return self.__solve_r(0, 0)
+    
+    def __solve_r(self, i, j):
+
+        self.__animate()
+
+        self.__cells[i][j].visited = True
+
+        if self.__cells[i][j] == self.__cells[self.__num_cols - 1][self.__num_rows - 1]:
+            return True
+        
+        # left
+        if i > 0 and self.__cells[i][j].has_left_wall == False and self.__cells[i - 1][j].visited == False:
+            self.__cells[i][j].draw_move(self.__cells[i - 1][j])
+            check_if_true = self.__solve_r(i-1, j)
+            if check_if_true == True:
+                return True
+            else:
+                self.__cells[i][j].draw_move(self.__cells[i - 1][j], True)
+        # right
+
+        if i < self.__num_cols - 1 and self.__cells[i][j].has_right_wall == False and self.__cells[i + 1][j].visited == False:
+            self.__cells[i][j].draw_move(self.__cells[i + 1][j])
+            check_if_true = self.__solve_r(i + 1, j)
+            if check_if_true == True:
+                return True
+            else:
+                self.__cells[i][j].draw_move(self.__cells[i + 1][j], True)
+        
+        #up
+
+        if j > 0 and self.__cells[i][j].has_top_wall == False and self.__cells[i][j - 1].visited == False:
+            self.__cells[i][j].draw_move(self.__cells[i][j - 1])
+            check_if_true = self.__solve_r(i, j - 1)
+            if check_if_true == True:
+                return True
+            else:
+                self.__cells[i][j].draw_move(self.__cells[i][j - 1], True)
+
+        # down
+        if j < self.__num_rows - 1 and self.__cells[i][j].has_bottom_wall == False and self.__cells[i][j + 1].visited == False:
+            self.__cells[i][j].draw_move(self.__cells[i][j + 1])
+            check_if_true = self.__solve_r(i, j + 1)
+            if check_if_true == True:
+                return True
+            else:
+                self.__cells[i][j].draw_move(self.__cells[i][j + 1], True)
+        # No direction worked out
+        return False
             
             
 
